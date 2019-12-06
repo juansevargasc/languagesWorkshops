@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define TKN_PREDARIT 1  /* Token definido para los predicados aritm�ticos */
-#define TKN_PREDALGE 2  /* Token definido para los predicados algebraicos */
-#define TKN_NUMBER 3    /* Token definido para n�meros */
-#define TKN_PUNCTUATION 4  /* Token definido para los signos de puntuaci�n */
-#define TKN_OPEREL 5    /* Token definido para los operadores relacionales */
-#define TKN_OPERARIT 6    /* Token definido para los operadores aritm�ticos */
-#define TKN_LOGICOPER 7   /* Token definido para los operadores l�gicos */
-#define TKN_LOGICVAL 8
+#include "definiciones.h"
 
 extern int yylex();
 extern int yylineno;
