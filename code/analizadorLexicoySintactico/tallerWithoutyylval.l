@@ -2,23 +2,23 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "definiciones.h"
+#include "definiciones.h" /*Tabla de definiciones en archivo aparte*/
 %}
 %option nounput yylineno
 
 DIGITO [0-9]
-VARARIT [p|q|r|t]
+VARARIT [a|b|p|q|r|t]
 VARALGE [x|y|z]
-PREDARIT  {VARARIT}{DIGITO}*
-PREDALGE  {VARALGE}{DIGITO}*
+PREDARIT  {VARARIT}({DIGITO}{1,4})
+PREDALGE  {VARALGE}({DIGITO}{1,4})
 ENTERO  [0-9]+
 REAL  [0-9]+\.[0-9]+
 
 %%
 [ \t\n]+    ;
-{PREDARIT}   return TKN_PREDARIT;
-{PREDALGE}		 return TKN_PREDALGE;
-{ENTERO}|{REAL}		return TKN_NUMBER;
+{PREDARIT}   {return TKN_PREDARIT;}
+{PREDALGE}		{return TKN_PREDALGE;}
+{ENTERO}|{REAL}		{return TKN_NUMBER;}
 ":"                     {return TKN_PUNCTUATION;}
 "="                     {return TKN_OPEREL;}
 "+"                     {return TKN_OPERARIT;}

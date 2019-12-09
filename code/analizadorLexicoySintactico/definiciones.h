@@ -1,3 +1,4 @@
+#define NULLTOKEN -1 
 #define TKN_PREDARIT 1  /* Token definido para los predicados aritm�ticos */
 #define TKN_PREDALGE 2  /* Token definido para los predicados algebraicos */
 #define TKN_NUMBER 3    /* Token definido para n�meros */
