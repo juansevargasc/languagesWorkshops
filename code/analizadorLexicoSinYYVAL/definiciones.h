@@ -1,3 +1,4 @@
+#define NULLTOKEN -1
 #define TKN_PREDARIT 1  /* Token definido para los predicados aritm�ticos */
 #define TKN_PREDALGE 2  /* Token definido para los predicados algebraicos */
 #define TKN_NUMBER 3    /* Token definido para n�meros */
@@ -25,3 +26,4 @@
 #define OP_EXIST 25
 #define OP_TRUE 26
 #define OP_FALSE 27
+#define TKN_VARINT 28

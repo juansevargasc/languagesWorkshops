@@ -1,31 +1,41 @@
 %{
-void yyerror (char *s);
+void yyerror(char *s);
 int yylex();
 #include <stdio.h>     /* C declarations used in actions */
 #include <stdlib.h>
 #include <ctype.h>
-int symbols[52];
-int symbolVal(char symbol);
-void updateSymbolVal(char symbol, int val);
+bool symbols[52]; /*First change*/
+bool symbolVal(char[] symbol);
+void updateSymbolVal(char[] symbol, bool val);
 %}
 
 
 %union {int num; char id;} /* Yacc definitions */ /*Return types of yacc, equivalent of union in C*/
 %start line		/*Starting production*/
-%token print	/*Tokens from lex*/
-%token exit_command
-%token <num> number /*tokens that will be saved on type num or id defined for union*/
-%token <id> identifier
-%type <num> line exp term /*Types of yacc definitions defined for union*/
-%type <id> assignment
+%token IMPRIMIR	/*Tokens from lex*/
+%token ESCRIBIR
+%token LEER
+%token EXIT
+%token NULLTOKEN
+%token TKN_PREDARIT
+%token TKN_PREDALGE
+%token TKN_NUMBER
+%token TKN_PUNCTUATION
+%token TKN_OPEREL
+%token TKN_OPERARIT
+%token TKN_LOGICOPER
+%token TKN_LOGICVAL
+%token TKN_VARINT
+%type <num> line exp term /*Types of yacc definitions defined for union, terminals*/
+%type <id> assignment /**/
 
 %%
 
 /* descriptions of expected inputs     corresponding actions (in C) */
 
-line    : assignment ';'		{;}
+line : assignment ';'		{;}
 		| exit_command ';'		{exit(EXIT_SUCCESS);}
-		| print exp ';'			{printf("Printing %d\n", $2);}
+		| imprimir exp ';'			{printf("Printing %d\n", $2);}
 		| line assignment ';'	{;}
 		| line print exp ';'	{printf("Printing %d\n", $3);}
 		| line exit_command ';'	{exit(EXIT_SUCCESS);}
