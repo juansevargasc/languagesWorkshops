@@ -7,7 +7,8 @@
 %option nounput yylineno
 
 DIGITO [0-9]
-VARARIT [a|b|p|q|r|t]
+VARINT [abc]
+VARARIT [p|q|r|t]
 VARALGE [x|y|z]
 PREDARIT  {VARARIT}({DIGITO}{1,4})
 PREDALGE  {VARALGE}({DIGITO}{1,4})
@@ -17,7 +18,8 @@ REAL  [0-9]+\.[0-9]+
 %%
 [ \t\n]+    ;
 {PREDARIT}   {return TKN_PREDARIT;}
-{PREDALGE}		{return TKN_PREDALGE;}
+{PREDALGE}	 {return TKN_PREDALGE;}
+{VARINT}		 {return TKN_VARINT;}
 {ENTERO}|{REAL}		{return TKN_NUMBER;}
 ":"                     {return TKN_PUNCTUATION;}
 "="                     {return TKN_OPEREL;}
