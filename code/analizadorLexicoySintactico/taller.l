@@ -21,9 +21,9 @@ REAL  [0-9]+\.[0-9]+
 "leer"									{return LEER;}
 "escribir"							{return IMPRIMIR;}
 "salir"									{return EXIT;}
-{PREDARIT}   						{return TKN_PREDARIT;}
-{PREDALGE}		 					{return TKN_PREDALGE;}
-{ENTERO}|{REAL}					{return TKN_NUMBER;}
+{PREDARIT}   						{yylval.str = yytext; return TKN_PREDARIT;}
+{PREDALGE}		 					{yylval.str = yytext; return TKN_PREDALGE;}
+{ENTERO}|{REAL}					{yylval.num = atoi(yytext);return TKN_NUMBER;}
 ":="                    {yylval.str = yytext; return TKN_PUNCTUATION;}
 ":"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
 "="                     {yylval.str = yytext; return TKN_OPEREL;}
@@ -40,7 +40,7 @@ REAL  [0-9]+\.[0-9]+
 "]"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
 "^"											{yylval.str = "&&"; return TKN_LOGICOPER;}
 "v"											{yylval.str = "||"; return TKN_LOGICOPER;}
-"�"                     {yylval.str = yytext; return TKN_LOGICOPER;}
+"_"                     {yylval.str = yytext; return TKN_LOGICOPER;}
 "V"											{yylval.str = yytext; return TKN_LOGICOPER;}
 "E"                     {yylval.str = yytext; return TKN_LOGICOPER;}
 "T"                     {yylval.str = yytext; return TKN_LOGICVAL;}

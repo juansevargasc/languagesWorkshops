@@ -1657,7 +1657,7 @@ int idOfPred(char *pred)
 			return j;
 		}else
 		 {
-			 return -1;
+			 return 0;
 		 }
 	}
 
@@ -1687,7 +1687,7 @@ int main (void) {
 		printf("Id: %s, Val: %s\n", identifiers[i], values[i]?"true":"false");
 	}
 
-	return yyparse ( );
+	return yyparse( );
 }
 
 void yyerror (char *s) {fprintf (stderr, "%s\n", s);}
