@@ -4,30 +4,31 @@ int yylex();
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-bool values[52];
-char[] identifiers[52];
-bool symbolVal(char symbol[]);
-void updateSymbolVal(char[] symbol, bool val);
-int idOfPred(char pred[]);
+#include <string.h>
+int values[52];
+char *identifiers[52];
+int symbolVal(char *symbol);
+void updateSymbolVal(char *symbol, int val);
+int idOfPred(char *pred);
 %}
 
-%union {bool logic; char id[]; int num;}
+%union {char *str; int num;}
 %token IMPRIMIR
 %token ESCRIBIR
 %token LEER
 %token EXIT
 %token NULLTOKEN
-%token <id> TKN_PREDARIT
-%token <id> TKN_PREDALGE
+%token <str> TKN_PREDARIT
+%token <str> TKN_PREDALGE
 %token <num> TKN_NUMBER
 %token TKN_PUNCTUATION
 %token TKN_OPEREL
 %token TKN_OPERARIT
-%token <logic> TKN_LOGICOPER
-%token <logic> TKN_LOGICVAL
-%token <id> TKN_VARINT
-%type <logic> LINE EXP TERM
-%type <id> ASSIGNMENT
+%token <str> TKN_LOGICOPER
+%token <num> TKN_LOGICVAL
+%token <str> TKN_VARINT
+%type <num> LINE EXP TERM
+%type <str> ASSIGNMENT
 %%
 
 /* descriptions of expected inputs     corresponding actions (in C) */
@@ -40,12 +41,13 @@ LINE : ASSIGNMENT ';'		{;}
 		| LINE EXIT ';'	{exit(EXIT_SUCCESS);}
         ;
 
-ASSIGNMENT : TKN_PREDARIT '=' EXP  { updateSymbolVal($1,$3); }
-					|	 TKN_PREDALGE ':=' EXP  { updateSymbolVal($1,$3); }
+ASSIGNMENT : TKN_PREDARIT ':' EXP  { updateSymbolVal($1,$3); }
+					|	 TKN_PREDARIT '=' EXP  { updateSymbolVal($1,$3); }
 					;
 
 EXP    	: TERM	{$$ = $1;}
-       	| EXP TKN_LOGICOPER TERM	{$$ = $1 $2 $3;}
+       	| EXP 'v' TERM	{$$ = $1 || $3;}
+				| EXP '^' TERM	{$$ = $1 && $3;}
        	;
 
 TERM   	: TKN_LOGICVAL                {$$ = $1;}
@@ -56,29 +58,30 @@ TERM   	: TKN_LOGICVAL                {$$ = $1;}
 %%                     /* C code */
 /* returns the value of a given symbol */
 
-int idOfPred(char pred[])
+int idOfPred(char *pred)
 {
 	for(int j = 0; j < 52; j++)
 	{
-		char[] m = identifiers[j];
-		if( strcmp(pred, m) != 0 )
+		char *m = identifiers[j];
+		if( strcmp(m, pred) != 0 )
 		{
 			return j;
 		}else
-		{
-			return -1;
-		}
+		 {
+			 return -1;
+		 }
 	}
+
 }
 
-bool symbolVal(char symbol[])
+int symbolVal(char *symbol)
 {
 	int id = idOfPred(symbol);
 	return values[id];
 }
 
 /* updates the value of a given symbol */
-void updateSymbolVal(char symbol[], bool val)
+void updateSymbolVal(char *symbol, int val)
 {
 	int id = idOfPred(symbol);
 	values[id] = val;
@@ -90,9 +93,9 @@ int main (void) {
 	int i;
 	for(i=0; i<52; i++)
 	{
-		values[i] = false;
-		identifiers[i] = 'a';
-		printf("Id: %s, Val: %s\n", identifiers[i], values[i]?"true":"false")
+		values[i] = 0;
+		identifiers[i] = "a";
+		printf("Id: %s, Val: %s\n", identifiers[i], values[i]?"true":"false");
 	}
 
 	return yyparse ( );

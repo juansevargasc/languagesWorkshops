@@ -76,8 +76,8 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 14 "talleryacc.y"
-{bool logic; char id[]; int num;}
+#line 15 "talleryacc.y"
+{char *str; int num;}
 /* Line 1529 of yacc.c.  */
 #line 83 "y.tab.h"
 	YYSTYPE;
