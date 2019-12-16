@@ -17,34 +17,35 @@ ENTERO  [0-9]+
 REAL  [0-9]+\.[0-9]+
 
 %%
-[ \t\n]+    						;
 "imprimir"							{return IMPRIMIR;}
 "leer"									{return LEER;}
 "escribir"							{return IMPRIMIR;}
 "salir"									{return EXIT;}
-{PREDARIT}   						{return TKN_PREDARIT;}
-{PREDALGE}		 					{return TKN_PREDALGE;}
-{ENTERO}|{REAL}					{return TKN_NUMBER;}
-":"                     {yylval = yytext; return TKN_PUNCTUATION;}
-"="                     {yylval = yytext; return TKN_OPEREL;}
-"+"                     {yylval = yytext; return TKN_OPERARIT;}
-"-"                     {yylval = yytext; return TKN_OPERARIT;}
-"*"                     {yylval = yytext; return TKN_OPERARIT;}
-"/"                     {yylval = yytext; return TKN_OPERARIT;}
-";"                     {yylval = yytext; return TKN_PUNCTUATION;}
-">"                     {yylval = yytext; return TKN_OPEREL;}
-"<"                     {yylval = yytext; return TKN_OPEREL;}
-"("                     {yylval = yytext; return TKN_PUNCTUATION;}
-")"                     {yylval = yytext; return TKN_PUNCTUATION;}
-"["                     {yylval = yytext; return TKN_PUNCTUATION;}
-"]"                     {yylval = yytext; return TKN_PUNCTUATION;}
-"^"											{yylval = '&'; return TKN_LOGICOPER;}
-"v"											{yylval = '|'; return TKN_LOGICOPER;}
-"�"                     {yylval = yytext; return TKN_LOGICOPER;}
-"V"											{yylval = yytext); return TKN_LOGICOPER;}
-"E"                     {yylval = yytext; return TKN_LOGICOPER;}
-"T"                     {yylval = yytext; return TKN_LOGICVAL;}
-"F"                     {yylval = yytext; return TKN_LOGICVAL;}
+{PREDARIT}   						{yylval.str = yytext; return TKN_PREDARIT;}
+{PREDALGE}		 					{yylval.str = yytext; return TKN_PREDALGE;}
+{ENTERO}|{REAL}					{yylval.num = atoi(yytext);return TKN_NUMBER;}
+":="                    {yylval.str = yytext; return TKN_PUNCTUATION;}
+":"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+"="                     {yylval.str = yytext; return TKN_OPEREL;}
+"+"                     {yylval.str = yytext; return TKN_OPERARIT;}
+"-"                     {yylval.str = yytext; return TKN_OPERARIT;}
+"*"                     {yylval.str = yytext; return TKN_OPERARIT;}
+"/"                     {yylval.str = yytext; return TKN_OPERARIT;}
+";"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+">"                     {yylval.str = yytext; return TKN_OPEREL;}
+"<"                     {yylval.str = yytext; return TKN_OPEREL;}
+"("                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+")"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+"["                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+"]"                     {yylval.str = yytext; return TKN_PUNCTUATION;}
+"^"											{yylval.str = "&&"; return TKN_LOGICOPER;}
+"v"											{yylval.str = "||"; return TKN_LOGICOPER;}
+"_"                     {yylval.str = yytext; return TKN_LOGICOPER;}
+"V"											{yylval.str = yytext; return TKN_LOGICOPER;}
+"E"                     {yylval.str = yytext; return TKN_LOGICOPER;}
+"T"                     {yylval.str = yytext; return TKN_LOGICVAL;}
+"F"                     {yylval.str = yytext; return TKN_LOGICVAL;}
+[ \t\n]+    						;
 %%
 
 
